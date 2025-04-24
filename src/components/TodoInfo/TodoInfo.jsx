@@ -7,9 +7,11 @@ function getUserById(userId) {
   return usersFromServer.find(user => user.id === userId) || null;
 }
 
+const currentUser = getUserById(this.userId);
+
 export const todos = todosFromServer.map(todo => ({
   ...todo,
-  user: getUserById(todo.userId),
+  user: currentUser,
 }));
 
 export const TodoInfo = ({ todo }) => (
@@ -20,9 +22,6 @@ export const TodoInfo = ({ todo }) => (
   >
     <h2 className="TodoInfo__title">{todo.title}</h2>
 
-    <UserInfo
-      key={getUserById(todo.userId).id}
-      user={getUserById(todo.userId)}
-    />
+    <UserInfo key={currentUser.id} user={currentUser} />
   </article>
 );
